@@ -1,0 +1,13 @@
+psych253/
+.DS_Store
+.idea/
+
+HW/ventral_neural_data.hdf5n
+HW/.ipynb_checkpoints/
+HW/__init__.py
+HW/__pycache__/
+HW/__pycache__/
+HW/assignment1.pdf
+HW/hw1_utils.pyc
+HW/ventral_neural_data.hdf5
+notes.txt
