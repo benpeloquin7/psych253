@@ -113,6 +113,7 @@ def get_all_neuron_reliabilities(data, num_splits=400, num_trials=40):
 
 def get_reliability_by_variation_level(data, level=0, num_splits=20,
                                        num_trials=10):
+    """Get neuron reliability by variation level."""
     d = data['variation_level_{}'.format(level)]
     reliabilities = get_all_neuron_reliabilities(d, num_splits, num_trials)
     return np.mean(reliabilities, axis=1), np.std(reliabilities,
