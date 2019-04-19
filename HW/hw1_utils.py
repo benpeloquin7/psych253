@@ -7,6 +7,7 @@ Utilities for assignment 1.
 import numpy as np
 import tqdm
 import scipy.stats as stats
+import multiprocessing
 
 
 def create_random_split(data, num_trials=None, seed=0):
@@ -37,7 +38,7 @@ def create_random_split(data, num_trials=None, seed=0):
     return first_half_of_trial_indices, second_half_of_trial_indices
 
 
-def get_neuron_reliability(data, neuron_id, num_trials=10, seed=0):
+def get_neuron_reliability(data, neuron_id, num_trials=10, seed=0, type_='regular'):
     """Get neuron reliability for a single split.
 
     Parameters
@@ -53,12 +54,17 @@ def get_neuron_reliability(data, neuron_id, num_trials=10, seed=0):
     """
     assert len(data.shape) == 3  # Check dims
     first_half, second_half = create_random_split(data, num_trials, seed)
+    if type_ == 'efficient':
+        d_first = np.expand_dims(np.array(data)[first_half, :, neuron_id].mean(0), 0)
+        d_second = np.expand_dims(np.array(data)[second_half, :, neuron_id].mean(0), 0)
+        d_comb = np.stack([d_first, d_second]).squeeze(1)
+        return np.corrcoef(d_comb)[0][1]
     d_first = np.array(data)[first_half, :, neuron_id].mean(0)
     d_second = np.array(data)[second_half, :, neuron_id].mean(0)
     return stats.pearsonr(d_first, d_second)[0]
 
 
-def get_neuron_reliabilities(data, neuron_id, num_splits=100, num_trials=10):
+def get_neuron_reliabilities(data, neuron_id, num_splits=100, num_trials=10, type_='regular'):
     """Get (multiple) reliabilities data for a single neuron.
 
     Parameters
@@ -82,11 +88,11 @@ def get_neuron_reliabilities(data, neuron_id, num_splits=100, num_trials=10):
     for split_num in range(num_splits):
         # Note split_num here for random seed
         res.append(
-            get_neuron_reliability(data, neuron_id, num_trials, split_num))
+            get_neuron_reliability(data, neuron_id, num_trials, split_num, type_))
     return np.array(res)
 
 
-def get_all_neuron_reliabilities(data, num_splits=400, num_trials=40):
+def get_all_neuron_reliabilities(data, num_splits=400, num_trials=40, type_='regular'):
     """
     We concluded that `having num_splits ~ 10 * num_trials
     is adequate so we use these as our default params.
@@ -112,9 +118,11 @@ def get_all_neuron_reliabilities(data, num_splits=400, num_trials=40):
 
 
 def get_reliability_by_variation_level(data, level=0, num_splits=20,
-                                       num_trials=10):
+                                       num_trials=10, type_='regular'):
     """Get neuron reliability by variation level."""
     d = data['variation_level_{}'.format(level)]
-    reliabilities = get_all_neuron_reliabilities(d, num_splits, num_trials)
+    reliabilities = \
+        get_all_neuron_reliabilities(d, num_splits, num_trials, type_)
     return np.mean(reliabilities, axis=1), np.std(reliabilities,
                                                   axis=1), reliabilities
+
