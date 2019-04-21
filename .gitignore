@@ -11,3 +11,6 @@ HW/assignment1.pdf
 HW/hw1_utils.pyc
 HW/ventral_neural_data.hdf5
 notes.txt
+
+# Data
+*.pickle
