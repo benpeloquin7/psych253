@@ -182,7 +182,7 @@ def run_models_over_n_splits(models, n_splits, X, y, test_size=0.25,
 
     Parameters
     ----------
-    models: list[BaseEsimator]
+    models: list[BaseEstimator]
         List of sklearn models.
     n_splits: int
         Number of train/test splits to make.
@@ -211,8 +211,7 @@ def run_models_over_n_splits(models, n_splits, X, y, test_size=0.25,
     pbar = tqdm.tqdm(total=n_splits)
     for i in range(n_splits):
         X_train, X_test, y_train, y_test = \
-            train_test_split(X, y, test_size=test_size,
-                             random_state=i)
+            train_test_split(X, y, test_size=test_size, random_state=i)
         res, tim = run_models_over_single_split(models, X_train, y_train,
                                                 X_test, y_test)
         results.append(res)
