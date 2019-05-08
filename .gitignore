@@ -2,10 +2,16 @@ psych253/
 .DS_Store
 .idea/
 
+
+# hw1
+HW/hw1/__pycache__/
+HW/hw1/pickles_from_marc_20190421/
+
+data/
 HW/ventral_neural_data.hdf5n
 HW/.ipynb_checkpoints/
 HW/__init__.py
-HW/__pycache__/
+
 HW/__pycache__/
 HW/assignment1.pdf
 HW/hw1_utils.pyc
