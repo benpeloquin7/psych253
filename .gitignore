@@ -3,19 +3,21 @@ psych253/
 .idea/
 
 
-# hw1
-HW/hw1/__pycache__/
-HW/hw1/pickles_from_marc_20190421/
-
-data/
+# HWs
+HW/ventral_neural_data.hdf5
 HW/ventral_neural_data.hdf5n
 HW/.ipynb_checkpoints/
 HW/__init__.py
+HW/hw1/.ipynb_checkpoints/
+HW/hw1/__pycache__/
+HW/hw1/pickles_from_marc_20190421/
+HW/hw2/.ipynb_checkpoints/
 
-HW/__pycache__/
-HW/assignment1.pdf
-HW/hw1_utils.pyc
-HW/ventral_neural_data.hdf5
+
+data/
+
+
+
 notes.txt
 
 # Data
